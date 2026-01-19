@@ -18,6 +18,10 @@ let tempImages = {
     editProduct: null
 };
 
+// Variables pour gérer les événements de fermeture du modal
+let modalEscapeHandler = null;
+let modalOutsideClickHandler = null;
+
 // ========== INITIALISATION ==========
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Site The Royce chargé');
@@ -27,7 +31,26 @@ document.addEventListener('DOMContentLoaded', function() {
     loadMenuData();
     initAnimations();
     initPhotoUpload();
+    initModalEvents();
 });
+
+// ========== INITIALISATION DES ÉVÉNEMENTS MODAL ==========
+function initModalEvents() {
+    // Fermeture modal produit avec Échap
+    modalEscapeHandler = function(e) {
+        if (e.key === 'Escape') {
+            closeProductModal();
+        }
+    };
+    
+    // Fermeture en cliquant en dehors
+    modalOutsideClickHandler = function(e) {
+        const productModal = document.getElementById('productModal');
+        if (e.target === productModal) {
+            closeProductModal();
+        }
+    };
+}
 
 // ========== INITIALISATION UPLOAD PHOTO ==========
 function initPhotoUpload() {
@@ -202,13 +225,13 @@ function initializeDefaultData() {
         }
     ];
     
-    // Produits par défaut (DESCRIPTION SUPPRIMÉE)
+    // Produits par défaut
     productsDB = [
         {
             id: 1,
             name: "خلطبيطه",
             price: "10.000 DT",
-            description: "", // Description supprimée
+            description: "",
             category: 1,
             ingredients: ["Chocolat Guanaja 70%", "Crème pistache", "Praliné croustillant", "Or edible"],
             tags: ["Signature", "Best-seller"],
@@ -219,7 +242,7 @@ function initializeDefaultData() {
             id: 2,
             name: "Éclair Pistache d'Or",
             price: "7.800 DT",
-            description: "", // Description supprimée
+            description: "",
             category: 2,
             ingredients: ["Pistache de Bronte", "Crème pâtissière", "Pâte à choux", "Glaçage doré"],
             tags: ["Pistache Premium", "Artisanal"],
@@ -230,7 +253,7 @@ function initializeDefaultData() {
             id: 3,
             name: "Forêt Noire Royce",
             price: "14.200 DT",
-            description: "", // Description supprimée
+            description: "",
             category: 3,
             ingredients: ["Chocolat 70%", "Crème pistache", "Griottes", "Biscuit cacao"],
             tags: ["Exclusif", "Création Maison"],
@@ -241,7 +264,7 @@ function initializeDefaultData() {
             id: 4,
             name: "Cappuccino Pistache",
             price: "5.500 DT",
-            description: "", // Description supprimée
+            description: "",
             category: 4,
             ingredients: ["Café arabica", "Lait entier", "Sirop pistache", "Chocolat râpé"],
             tags: ["Chaud", "Signature"],
@@ -405,8 +428,6 @@ function showProductDetails(productId) {
     const product = productsDB.find(p => p.id === productId);
     if (!product) return;
     
-    const category = categoriesDB.find(c => c.id === product.category);
-    
     const modal = document.getElementById('productModal');
     const modalBody = document.getElementById('productModalBody');
     
@@ -420,19 +441,23 @@ function showProductDetails(productId) {
             <div class="modal-header">
                 <h2>${product.name}</h2>
                 <div class="modal-price">${product.price}</div>
-                ${category ? `<div class="modal-category">${category.name}</div>` : ''}
             </div>
             
             ${product.ingredients && product.ingredients.length > 0 ? `
                 <div class="modal-ingredients">
-                    <h3><i class="fas fa-clipboard-list"></i> Ingrédients</h3>
+                    <h3><i class="fas fa-clipboard-list"></i> Ingrédients (${product.ingredients.length})</h3>
                     <div class="ingredients-list">
                         ${product.ingredients.map(ingredient => 
                             `<span class="ingredient"><i class="fas fa-check"></i> ${ingredient.trim()}</span>`
                         ).join('')}
                     </div>
                 </div>
-            ` : ''}
+            ` : `
+                <div class="modal-ingredients">
+                    <h3><i class="fas fa-clipboard-list"></i> Ingrédients</h3>
+                    <p style="color: var(--gris); font-style: italic;">Aucun ingrédient spécifié</p>
+                </div>
+            `}
             
             ${product.tags && product.tags.length > 0 ? `
                 <div class="modal-tags">
@@ -450,6 +475,10 @@ function showProductDetails(productId) {
     if (closeBtn) {
         closeBtn.addEventListener('click', closeProductModal);
     }
+    
+    // Activer les événements de fermeture
+    document.addEventListener('keydown', modalEscapeHandler);
+    modal.addEventListener('click', modalOutsideClickHandler);
 }
 
 function closeProductModal() {
@@ -457,6 +486,10 @@ function closeProductModal() {
     if (modal) {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
+        
+        // Retirer les événements de fermeture
+        document.removeEventListener('keydown', modalEscapeHandler);
+        modal.removeEventListener('click', modalOutsideClickHandler);
     }
 }
 
@@ -504,14 +537,6 @@ function initMenuSystem() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
-    
-    // Fermer modal produit en cliquant en dehors
-    window.addEventListener('click', function(event) {
-        const productModal = document.getElementById('productModal');
-        if (event.target === productModal) {
-            closeProductModal();
-        }
-    });
     
     // Indicateur de défilement
     const scrollIndicator = document.querySelector('.scroll-indicator');
@@ -654,10 +679,10 @@ function resetAdminForms() {
     const fieldsToReset = [
         'newCategoryName', 'newCategoryColor',
         'newProductCategorySelect', 'newProductName', 'newProductPrice',
-        'newProductIngredients', // Description supprimée
+        'newProductIngredients',
         'editCategoryName', 'editCategoryColor',
         'editProductName', 'editProductPrice', 
-        'editProductIngredients', // Description supprimée
+        'editProductIngredients',
         'editProductCategory',
         'adminCode'
     ];
@@ -1058,7 +1083,7 @@ function addNewProduct() {
     const newProductCategorySelect = document.getElementById('newProductCategorySelect');
     const newProductName = document.getElementById('newProductName');
     const newProductPrice = document.getElementById('newProductPrice');
-    const newProductIngredients = document.getElementById('newProductIngredients'); // Changé de Desc à Ingredients
+    const newProductIngredients = document.getElementById('newProductIngredients');
     const addProductBtn = document.getElementById('addProductBtn');
     
     if (!newProductCategorySelect || !newProductName || !newProductPrice || !newProductIngredients) return;
@@ -1105,7 +1130,7 @@ function addNewProduct() {
         id: getNextProductId(),
         name: name,
         price: formattedPrice,
-        description: "", // Description supprimée
+        description: "",
         category: categoryId,
         ingredients: ingredients,
         tags: [],
@@ -1172,7 +1197,7 @@ function loadProductForEdit() {
     const editProductSelect = document.getElementById('editProductSelect');
     const editProductName = document.getElementById('editProductName');
     const editProductPrice = document.getElementById('editProductPrice');
-    const editProductIngredients = document.getElementById('editProductIngredients'); // Changé de Desc à Ingredients
+    const editProductIngredients = document.getElementById('editProductIngredients');
     const editProductCategory = document.getElementById('editProductCategory');
     const editProductPreview = document.getElementById('editProductPreview');
     const updateProductBtn = document.getElementById('updateProductBtn');
@@ -1221,7 +1246,7 @@ function updateProduct() {
     const editProductSelect = document.getElementById('editProductSelect');
     const editProductName = document.getElementById('editProductName');
     const editProductPrice = document.getElementById('editProductPrice');
-    const editProductIngredients = document.getElementById('editProductIngredients'); // Changé de Desc à Ingredients
+    const editProductIngredients = document.getElementById('editProductIngredients');
     const editProductCategory = document.getElementById('editProductCategory');
     const updateProductBtn = document.getElementById('updateProductBtn');
     
@@ -1278,7 +1303,7 @@ function updateProduct() {
             ...productsDB[productIndex],
             name: newName,
             price: formattedPrice,
-            description: "", // Description supprimée
+            description: "",
             ingredients: newIngredients,
             image: newImage,
             category: newCategoryId,
