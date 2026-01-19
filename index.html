@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Royce | Salon de Thé - Sfax Taniour</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="#">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
+                    <circle cx="50" cy="40" r="35" stroke="#D4AF37" stroke-width="4" fill="none" />
+                    <text x="50" y="52" font-family="Serif" font-size="40" fill="#D4AF37" text-anchor="middle" font-weight="bold">R</text>
+                </svg>
+                <span>The Royce</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <!-- Bouton Admin dans la navigation -->
+                <li class="nav-admin-item">
+                    <button class="nav-admin-btn" id="adminNavBtn" title="Administration">
+                        <i class="fas fa-cog"></i>
+                        <span class="admin-text">Admin</span>
+                    </button>
+                </li>
+            </ul>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Section Héro -->
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <!-- Logo Principal -->
+            <div class="main-logo">
+                <div class="logo-circle">
+                    <svg width="150" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="main-logo-svg">
+                        <circle cx="50" cy="40" r="35" stroke="#D4AF37" stroke-width="4" fill="none" />
+                        <text x="50" y="52" font-family="Serif" font-size="40" fill="#D4AF37" text-anchor="middle" font-weight="bold">R</text>
+                    </svg>
+                    <h1 class="logo-title">The Royce</h1>
+                </div>
+                <!-- Éléments décoratifs -->
+                <div class="choco-piece">
+                    <div class="choco-drip"></div>
+                    <div class="choco-drip"></div>
+                    <div class="choco-drip"></div>
+                </div>
+                <div class="pistache-piece">
+                    <div class="pistache-crack"></div>
+                </div>
+            </div>
+
+            <!-- Texte et Bouton -->
+            <div class="hero-text">
+                <h2>Bienvenue au Royce <span class="choco-text">cher visiteur !</span> Nous sommes ravis de vous accueillir <span class="pistache-text">dans notre univers</span></h2>
+                <a href="menu.html" class="btn-menu">
+                    <i class="fas fa-utensils"></i>
+                    Voir le Menu Complet
+                </a>
+            </div>
+
+            <!-- Indicateur Défilement -->
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Nous <span>Retrouver</span></h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Adresse</h3>
+                            <p>Route taniour  km2<br>Sfax, Tunisia</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Horaires</h3>
+                            <p>Lun - Dim: 8h00 - 00h00</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Téléphone</h3>
+                            <p>+216 54 069 408</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61573708417503" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/the.roycecoffee/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@bassem.bassem25" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Admin -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-modal-content">
+            <span class="admin-close">&times;</span>
+            <h2><i class="fas fa-lock"></i> Accès Administrateur</h2>
+            
+            <div class="admin-login" id="adminLogin">
+                <p>Veuillez entrer le code administrateur :</p>
+                <div class="admin-input-group">
+                    <input type="password" id="adminCode" maxlength="20">
+                    <button id="adminSubmit" class="btn-admin">
+                        <i class="fas fa-unlock"></i> Valider
+                    </button>
+                </div>
+            </div>
+            
+            <div class="admin-panel" id="adminPanel" style="display: none;">
+                <h3><i class="fas fa-tools"></i> Panneau d'Administration</h3>
+                
+                <!-- Section Ajouter Catégorie -->
+                <div class="admin-section">
+                    <h4><i class="fas fa-plus-circle"></i> Ajouter une Nouvelle Catégorie</h4>
+                    <div class="admin-form">
+                        <input type="text" id="newCategoryName" placeholder="Nom de la catégorie" required>
+                        
+                        <!-- Champ photo -->
+                        <div class="photo-upload-container">
+                            <label for="newCategoryPhoto" class="photo-upload-label">
+                                <i class="fas fa-camera"></i> Ajouter une photo
+                            </label>
+                            <input type="file" id="newCategoryPhoto" accept="image/*" style="display: none;">
+                            <div class="photo-preview" id="newCategoryPreview"></div>
+                        </div>
+                        
+                        <input type="color" id="newCategoryColor" value="#6B4423" title="Couleur de la catégorie">
+                        <button id="addCategoryBtn" class="btn-admin">
+                            <i class="fas fa-plus"></i> Ajouter Catégorie
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Section Ajouter Produit -->
+                <div class="admin-section">
+                    <h4><i class="fas fa-plus-circle"></i> Ajouter un Nouveau Produit</h4>
+                    <div class="admin-form">
+                        <select id="newProductCategorySelect" required>
+                            <option value="">Sélectionner une catégorie</option>
+                        </select>
+                        <input type="text" id="newProductName" placeholder="Nom du produit" required>
+                        <input type="text" id="newProductPrice" placeholder="Prix (ex: 10.000 DT)" required>
+                        <textarea id="newProductDesc" placeholder="Description du produit" rows="3" required></textarea>
+                        <textarea id="newProductIngredients" placeholder="Ingrédients (séparés par des virgules)" rows="2" required></textarea>
+                        
+                        <!-- Champ photo -->
+                        <div class="photo-upload-container">
+                            <label for="newProductPhoto" class="photo-upload-label">
+                                <i class="fas fa-camera"></i> Ajouter une photo du produit
+                            </label>
+                            <input type="file" id="newProductPhoto" accept="image/*" style="display: none;">
+                            <div class="photo-preview" id="newProductPreview"></div>
+                        </div>
+                        
+                        <button id="addProductBtn" class="btn-admin">
+                            <i class="fas fa-plus"></i> Ajouter Produit
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Section Modifier Catégorie -->
+                <div class="admin-section">
+                    <h4><i class="fas fa-layer-group"></i> Gérer les Catégories</h4>
+                    <div class="admin-form">
+                        <select id="editCategorySelect">
+                            <option value="">Sélectionner une catégorie à modifier</option>
+                        </select>
+                        
+                        <input type="text" id="editCategoryName" placeholder="Nom de la catégorie" required>
+                        
+                        <!-- Photo pour modification -->
+                        <div class="photo-upload-container">
+                            <label for="editCategoryPhoto" class="photo-upload-label">
+                                <i class="fas fa-camera"></i> Modifier la photo
+                            </label>
+                            <input type="file" id="editCategoryPhoto" accept="image/*" style="display: none;">
+                            <div class="photo-preview" id="editCategoryPreview"></div>
+                        </div>
+                        
+                        <input type="color" id="editCategoryColor" value="#6B4423" title="Couleur">
+                        
+                        <div class="admin-buttons">
+                            <button id="updateCategoryBtn" class="btn-admin" disabled>
+                                <i class="fas fa-save"></i> Mettre à Jour
+                            </button>
+                            <button id="deleteCategoryBtn" class="btn-admin btn-danger" disabled>
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Section Modifier Produit -->
+                <div class="admin-section">
+                    <h4><i class="fas fa-edit"></i> Gérer les Produits</h4>
+                    <div class="admin-form">
+                        <select id="editProductSelect">
+                            <option value="">Sélectionner un produit à modifier</option>
+                        </select>
+                        
+                        <select id="editProductCategory" required>
+                            <option value="">Sélectionner une catégorie</option>
+                        </select>
+                        
+                        <div class="admin-form-grid">
+                            <input type="text" id="editProductName" placeholder="Nom" required>
+                            <input type="text" id="editProductPrice" placeholder="Prix" required>
+                        </div>
+                        <textarea id="editProductDesc" placeholder="Description" rows="2" required></textarea>
+                        <textarea id="editProductIngredients" placeholder="Ingrédients (séparés par des virgules)" rows="2" required></textarea>
+                        
+                        <!-- Photo pour modification -->
+                        <div class="photo-upload-container">
+                            <label for="editProductPhoto" class="photo-upload-label">
+                                <i class="fas fa-camera"></i> Modifier la photo
+                            </label>
+                            <input type="file" id="editProductPhoto" accept="image/*" style="display: none;">
+                            <div class="photo-preview" id="editProductPreview"></div>
+                        </div>
+                        
+                        <div class="admin-buttons">
+                            <button id="updateProductBtn" class="btn-admin" disabled>
+                                <i class="fas fa-save"></i> Mettre à Jour
+                            </button>
+                            <button id="deleteProductBtn" class="btn-admin btn-danger" disabled>
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
