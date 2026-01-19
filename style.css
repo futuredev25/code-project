@@ -741,7 +741,7 @@ h1, h2, h3, h4 {
     border-radius: 20px;
     width: 90%;
     max-width: 800px;
-    max-height: 90vh;
+    max-height: 85vh; /* Réduit pour laisser de l'espace autour */
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     position: relative;
@@ -756,7 +756,7 @@ h1, h2, h3, h4 {
     color: var(--blanc);
     cursor: pointer;
     transition: color 0.3s;
-    z-index: 2;
+    z-index: 10002; /* Augmenté pour être au-dessus de tout */
     background-color: rgba(0, 0, 0, 0.3);
     width: 40px;
     height: 40px;
@@ -770,71 +770,96 @@ h1, h2, h3, h4 {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* MODIFICATION : TOUT LE MODAL SCROLLABLE */
 .product-modal-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 500px;
+    min-height: 400px; /* Réduit pour permettre le scroll */
+    max-height: 80vh; /* Limite la hauteur maximale */
+    overflow-y: auto; /* Activer le scroll vertical POUR TOUT LE MODAL */
+    overflow-x: hidden;
 }
 
+/* Styles pour la barre de défilement DU MODAL ENTIER */
+.product-modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.product-modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.product-modal-body::-webkit-scrollbar-thumb {
+    background: var(--pistache);
+    border-radius: 10px;
+}
+
+.product-modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--pistache-fonce);
+}
+
+/* Image fixe à gauche */
 .modal-image {
     height: 100%;
-    min-height: 500px;
+    min-height: 400px; /* Réduit pour correspondre */
     background-size: cover;
     background-position: center;
     border-radius: 20px 0 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
+/* TOUTE LA PARTIE DROITE SCROLLABLE */
 .modal-info {
     padding: 40px;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    overflow: visible; /* Changé de auto à visible */
 }
 
+/* MODIFICATION : EN-TÊTE MINIMAL */
 .modal-header {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
+    flex-shrink: 0;
 }
 
 .modal-header h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--chocolat);
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .modal-price {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: bold;
     color: var(--pistache-fonce);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.modal-category {
-    display: inline-block;
-    background-color: var(--beige);
-    color: var(--chocolat);
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-}
-
-.modal-description {
-    color: var(--noir);
-    line-height: 1.6;
-    margin-bottom: 30px;
-    font-size: 1.05rem;
-}
-
+/* MODIFICATION : INGRÉDIENTS SCROLLABLES DANS TOUT LE MODAL */
 .modal-ingredients {
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    overflow: visible; /* Désactiver le scroll ici */
 }
 
 .modal-ingredients h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--chocolat);
     margin-bottom: 15px;
     display: flex;
     align-items: center;
     gap: 10px;
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 10px 0;
+    z-index: 1;
 }
 
 .modal-ingredients h3 i {
@@ -845,6 +870,8 @@ h1, h2, h3, h4 {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    overflow: visible; /* Désactiver le scroll ici */
+    padding-bottom: 10px;
 }
 
 .ingredient {
@@ -868,6 +895,9 @@ h1, h2, h3, h4 {
     flex-wrap: wrap;
     gap: 10px;
     margin-top: auto;
+    flex-shrink: 0;
+    padding-top: 15px;
+    border-top: 1px solid var(--gris-clair);
 }
 
 /* ========== CHARGEMENT ========== */
@@ -1169,15 +1199,22 @@ h1, h2, h3, h4 {
     
     .product-modal-body {
         grid-template-columns: 1fr;
+        max-height: 75vh;
     }
     
     .modal-image {
         min-height: 300px;
+        max-height: 40vh;
         border-radius: 20px 20px 0 0;
+        position: relative;
     }
     
     .products-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .modal-ingredients {
+        margin-top: 5px;
     }
 }
 
@@ -1281,6 +1318,7 @@ h1, h2, h3, h4 {
         margin: 10% auto;
         padding: 0;
         width: 95%;
+        max-height: 90vh;
     }
     
     .modal-info {
@@ -1293,6 +1331,10 @@ h1, h2, h3, h4 {
     
     .modal-price {
         font-size: 1.6rem;
+    }
+    
+    .modal-ingredients {
+        margin-top: 5px;
     }
 }
 
@@ -1350,6 +1392,7 @@ h1, h2, h3, h4 {
     .product-modal-content {
         width: 98%;
         margin: 5% auto;
+        max-height: 85vh;
     }
     
     .modal-info {
@@ -1369,4 +1412,35 @@ h1, h2, h3, h4 {
 @keyframes float-pistache-mobile {
     0%, 100% { transform: rotate(-30deg) translateY(0) scale(0.8); }
     50% { transform: rotate(-30deg) translateY(-8px) scale(0.8); }
+}
+
+/* ========== MODIFICATIONS SUPPLÉMENTAIRES POUR MODAL SCROLLABLE ========== */
+/* Sur les écrans très hauts */
+@media (max-height: 700px) {
+    .product-modal-body {
+        max-height: 70vh;
+    }
+    
+    .modal-image {
+        min-height: 250px;
+    }
+}
+
+/* Amélioration de l'expérience tactile sur mobile */
+@media (hover: none) and (pointer: coarse) {
+    .product-close {
+        width: 45px;
+        height: 45px;
+        font-size: 1.8rem;
+    }
+    
+    /* Faciliter le scroll sur mobile */
+    .product-modal-body {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Empêcher l'image de disparaître lors du scroll */
+.modal-image {
+    align-self: flex-start;
 }
